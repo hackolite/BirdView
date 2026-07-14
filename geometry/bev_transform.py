@@ -166,7 +166,7 @@ def warp_image_to_bev(
     plane_cam: np.ndarray,
     canvas_size: int = 800,
     meters_per_pixel: float = 0.02,
-) -> np.ndarray:
+) -> tuple[np.ndarray, np.ndarray]:
     """
     Warpe l'image entière vers une vue du dessus (pour la fenêtre de
     visualisation). Combine l'homographie analytique (image -> monde en
