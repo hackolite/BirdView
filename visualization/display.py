@@ -207,8 +207,9 @@ class TrackingRenderer:
             if 0 <= xi < self.canvas_size and 0 <= yi < self.canvas_size:
                 cv2.circle(canvas, (xi, yi), 7, color, -1)
                 cv2.circle(canvas, (xi, yi), 7, (255, 255, 255), 1)
-                cv2.putText(canvas, str(tid), (xi + 8, yi + 5),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 1)
+                if tid != -1:
+                    cv2.putText(canvas, str(tid), (xi + 8, yi + 5),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 1)
 
         cv2.putText(canvas, f"Personnes: {len(world_points)}", (10, 25),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)

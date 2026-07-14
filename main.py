@@ -223,10 +223,10 @@ def run_on_video(pipeline: BevPipeline, source, config: Config,
     fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
     canvas_size = config.bev_canvas_size_px
 
+    # The writer is opened lazily after the first combined frame so that
+    # the actual output dimensions (aspect-ratio-correct camera resize + BEV)
+    # are known precisely, avoiding a width mismatch.
     writer: cv2.VideoWriter | None = None
-    if output_path:
-        # Sortie : image caméra annotée (redimensionnée) + BEV côte à côte
-        writer = _open_video_writer(output_path, fps, canvas_size * 2, canvas_size)
 
     if mode == "tracking":
         renderer = TrackingRenderer(canvas_size, config.bev_meters_per_pixel)
@@ -269,8 +269,11 @@ def run_on_video(pipeline: BevPipeline, source, config: Config,
         cv2.putText(annotated, f"Personnes: {len(world_points)} | Densite: {density:.2f} pers/m2",
                     (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
 
-        if writer is not None:
+        if output_path:
             combined = _make_combined_frame(annotated, bev_image, canvas_size)
+            if writer is None:
+                h, w = combined.shape[:2]
+                writer = _open_video_writer(output_path, fps, w, h)
             writer.write(combined)
 
         if not no_display and not _IN_COLAB:

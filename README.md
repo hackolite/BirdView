@@ -76,13 +76,24 @@ import subprocess, sys, os
 
 # Lancer le pipeline en mode headless (pas d'écran sur Colab)
 # Remplacez "video_input.mp4" par votre fichier uploadé dans /content/
+
+# Si installé via pip (entry point 'birdview') :
 subprocess.run([
-    sys.executable, "main.py",
+    "birdview",
     "-m", "heatmap",
     "-i", "/content/video_input.mp4",
     "-o", "/content/video_output.mp4",
     "--no-display",
 ], check=True)
+
+# Ou directement avec Python (depuis le répertoire cloné) :
+# subprocess.run([
+#     sys.executable, "main.py",
+#     "-m", "heatmap",
+#     "-i", "/content/video_input.mp4",
+#     "-o", "/content/video_output.mp4",
+#     "--no-display",
+# ], check=True)
 
 # Afficher le résultat dans le notebook
 from IPython.display import Video
