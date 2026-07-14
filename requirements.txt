@@ -1,0 +1,14 @@
+# Deep learning
+torch>=2.1.0
+torchvision>=0.16.0
+transformers>=4.44.0
+accelerate>=0.30.0
+timm>=1.0.0          # requis par certains backbones HuggingFace (segformer/depth)
+
+# Détection d'objets
+ultralytics>=8.3.0    # YOLOv8 / YOLO11
+
+# Vision / géométrie
+opencv-python>=4.9.0
+numpy>=1.26.0
+Pillow>=10.0.0
